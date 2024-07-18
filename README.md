@@ -5,6 +5,10 @@ Open New Terminal
 ```bash
     pip install -r requirements.txt
 ```
+Run file in Terminal
+```bash
+    python app.py
+```
 Check API status
 ```bash
     yourlocalhost/status
