@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
-import os
+import io
+from PIL import Image
 from math import ceil
 
 app = Flask(__name__)
@@ -25,11 +26,13 @@ def status():
 def predict():
     # Read image file from the request
     file = request.files['image']
-    image_path = os.path.join('static/images', file.filename)
-    file.save(image_path)
     
-    # Load image to be predicted
-    image = cv2.imread(image_path)
+    # Convert the image file to a numpy array
+    in_memory_file = io.BytesIO(file.read())
+    image = Image.open(in_memory_file)
+    image = np.array(image)
+    
+    # Preprocess the image
     resized_image = cv2.resize(image, (128, 128))  # Resize image to match model input shape
     input_image = np.expand_dims(resized_image, axis=0) / 255.0  # Normalize image and add batch dimension
 
