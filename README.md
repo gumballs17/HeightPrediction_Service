@@ -1,5 +1,5 @@
 ## Run Endpoint Locally
-Endpoint ini merupakan salah satu service website MyBidan untuk mengukur tinggi badan balita. Menerima input image dan mengembalikan array height_cm dan status.
+Endpoint ini merupakan bagian dari layanan website MyBidan yang bertugas untuk mengukur tinggi badan balita. Endpoint ini menerima input berupa gambar dan mengembalikan nilai tinggi badan dalam centimeter serta status prediksi.
 
 Open New Terminal
 ```bash
