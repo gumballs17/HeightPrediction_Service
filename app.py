@@ -4,7 +4,7 @@ import numpy as np
 from tensorflow.keras.models import load_model
 import io
 from PIL import Image
-from math import ceil
+from math import tan, radians, ceil
 
 app = Flask(__name__)
 
@@ -42,10 +42,11 @@ def predict():
     x_max = x_min + width
     y_max = y_min + height
     
-    #jarak_kamera dalam sentimeter (cm) dan tinggi_kamera dalam sentimeter (cm)
-    jarak_kamera_cm = 100
-    tinggi_kamera_cm = 90
-
+    # Jarak kamera dalam sentimeter (cm) dan tinggi kamera dalam sentimeter (cm)
+    jarak_kamera_cm = 200  # Sesuaikan dengan jarak yang Anda gunakan
+    tinggi_kamera_cm = 100  # Sesuaikan dengan tinggi kamera yang Anda gunakan
+    fov_vertical = 45  # Sudut pandang vertikal kamera dalam derajat
+    
     # Define threshold for detection
     min_detection_width = 5
     min_detection_height = 5
@@ -58,7 +59,10 @@ def predict():
         })
     
     # Hitung tinggi objek berdasarkan bounding box dalam sentimeter
-    tinggi_objek_cm = (height * (tinggi_kamera_cm / jarak_kamera_cm)) / 10
+    image_height, image_width, _ = image.shape
+    angle_of_view = fov_vertical / 2
+    bbox_height_cm = 2 * jarak_kamera_cm * tan(radians(angle_of_view)) * (height / image_height)
+    tinggi_objek_cm = bbox_height_cm
 
     # Bulatkan tinggi_objek_cm ke atas dengan dua angka desimal
     tinggi_objek_rounded = ceil(tinggi_objek_cm * 100) / 100
