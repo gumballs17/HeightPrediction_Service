@@ -9,7 +9,7 @@ from math import tan, radians, ceil
 app = Flask(__name__)
 
 # Path to the model
-model_path = 'Models/used_model.keras'
+model_path = 'Models/finalv2_model.keras'
 
 # Load trained model
 model = load_model(model_path)
